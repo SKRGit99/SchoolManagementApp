@@ -36,7 +36,7 @@ namespace SchoolManagementApplicationDAL.Repository
     public class SuperAdminRepo : StudentRepo, ISuperAdmin     
     {
         
-        private readonly string _connString = "Server=Sampat-PC\\;Database=SchoolManagementAppDevDb;Integrated Security=True;";
+        private readonly string _connString = "Server=SAMPAT-PC\\;Database=SchoolManagementAppDevDb;Integrated Security=True;";
 
         public SuperAdminRepo()
         { 

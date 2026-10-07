@@ -9,7 +9,7 @@ namespace SchoolManagementApplicationDAL.Repository
 {
     public class DepartmentRepo : OrganizationRepo
     {
-        private readonly string _connString = "Server=Sampat-PC\\;Database=SchoolManagementAppDevDb;Integrated Security=True;";
+        private readonly string _connString = "Server=SAMPAT-PC\\;Database=SchoolManagementAppDevDb;Integrated Security=True;";
         public DepartmentRepo() 
         {
         
