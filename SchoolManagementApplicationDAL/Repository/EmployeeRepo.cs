@@ -1,4 +1,5 @@
-﻿using SchoolManagementApplicationDAL.Abstract;
+﻿using Microsoft.Extensions.Configuration;
+using SchoolManagementApplicationDAL.Abstract;
 using SchoolManagementApplicationDAL.Model;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,19 @@ namespace SchoolManagementApplicationDAL.Repository
  */
     public class EmployeeRepo : DepartmentRepo,IEmployee
     {
-        public EmployeeRepo() { }
+        //public EmployeeRepo() 
+        //{ 
+        //}
+
+        //private readonly string? _connString;
+
+        /* Since DepartmentRepo now requires IConfiguration, But EmployeeRepo was not passing the IConfiguration to the Parent Class.
+         * Hence modified the constructor to accept IConfiguration and pass it to the base class constructor.
+         */
+        public EmployeeRepo(IConfiguration configuration):base(configuration)
+        {
+            //_connString = configuration.GetConnectionString("SchoolManagementAppDbConnectionString");
+        }
 
         public override OrganizationDetails getOrganizationDetails()
         {

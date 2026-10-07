@@ -29,48 +29,54 @@ namespace SchoolManagementApplicationBAL
   */
     public class SuperAdminBAL
     {
-        ISuperAdmin adminSup = new SuperAdminRepo();
+        //ISuperAdmin adminSup = new SuperAdminRepo();
 
-        
+        // Dependency Injection for the SuperAdmin Repository
+        private readonly ISuperAdmin stdet;
+
+        public SuperAdminBAL(ISuperAdmin superAdminRepo)
+        {
+            stdet = superAdminRepo;
+        }
         public List<StudentDetails> fetchStudentDetails(int _inputStudentId)
         {
             List<StudentDetails> detStudent = new List<StudentDetails>();
-            detStudent = adminSup.fetchStudentDetails(_inputStudentId);
+            detStudent = stdet.fetchStudentDetails(_inputStudentId);
             return detStudent;
         }
 
         public List<StudentDetailsForDropDown> GetStudentDetailsForDropdown(int studentId)
         {
             List<StudentDetailsForDropDown> detStudentDrpDwn = new List<StudentDetailsForDropDown>();
-            detStudentDrpDwn = adminSup.getStudentDetailsForDropDown(studentId);
+            detStudentDrpDwn = stdet.getStudentDetailsForDropDown(studentId);
             return detStudentDrpDwn;
         }
 
         public List<StudentDetails> GetStudentDetailsByRegistrationId(int selectedStudentRegId)
         {
             List<StudentDetails> detStudentbyRegId = new List<StudentDetails>();
-            detStudentbyRegId = adminSup.getStudentDetailsByRegistrationId(selectedStudentRegId);
+            detStudentbyRegId = stdet.getStudentDetailsByRegistrationId(selectedStudentRegId);
             return detStudentbyRegId;
         }
 
         public List<EducatorDetails> fetchEducatorDetails(int educatorid)
         {
             List<EducatorDetails> eduDetails = new List<EducatorDetails>();
-            eduDetails = adminSup.fetchEducatorDetails(educatorid);
+            eduDetails = stdet.fetchEducatorDetails(educatorid);
             return eduDetails;
         }
 
         public List<EducatorDetailsForDropDown> fetchEducatorDetailsForDropDown(int educatorid)
         {
             List<EducatorDetailsForDropDown> lstEduDetDrpDwn = new List<EducatorDetailsForDropDown>();
-            lstEduDetDrpDwn = adminSup.getEducatorDetailsForDropDown(educatorid);
+            lstEduDetDrpDwn = stdet.getEducatorDetailsForDropDown(educatorid);
             return lstEduDetDrpDwn;
         }
 
         public List<EducatorDetails> fetchEducatorDetailsByRegistrationId(int educatorid)
         {
             List<EducatorDetails> eduDetRegId = new List<EducatorDetails>();
-            eduDetRegId = adminSup.getEducatorDetailsByRegistrationId(educatorid);
+            eduDetRegId = stdet.getEducatorDetailsByRegistrationId(educatorid);
             return eduDetRegId;
         }
 

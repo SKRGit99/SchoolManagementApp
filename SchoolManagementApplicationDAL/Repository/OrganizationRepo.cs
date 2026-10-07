@@ -1,4 +1,5 @@
-﻿using SchoolManagementApplicationDAL.Model;
+﻿using Microsoft.Extensions.Configuration;
+using SchoolManagementApplicationDAL.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,10 +32,19 @@ namespace SchoolManagementApplicationDAL.Repository
    */
     public class OrganizationRepo
     {
-        private readonly string _connString = "Server=SAMPAT-PC\\;Database=SchoolManagementAppDevDb;Integrated Security=True;";
-        public OrganizationRepo() 
-        { 
-        
+        //private readonly string _connString = "Server=SAMPAT-PC\\;Database=SchoolManagementAppDevDb;Integrated Security=True;";
+        //public OrganizationRepo() 
+        //{ 
+
+        //}
+
+
+        /* Changed OrganizarionRepo to require IConfiguration.*/
+        protected readonly string? _connString;
+
+        public OrganizationRepo(IConfiguration configuration)
+        {
+            _connString = configuration.GetConnectionString("SchoolManagementAppDbConnectionString");
         }
         public virtual OrganizationDetails getOrganizationDetails()
         {

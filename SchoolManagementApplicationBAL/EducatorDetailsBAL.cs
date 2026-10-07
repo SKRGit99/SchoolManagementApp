@@ -29,8 +29,16 @@ namespace SchoolManagementApplicationBAL
   */
     public class EducatorDetailsBAL
     {
-        IEducator edudet = new EducatorRepo();
-        
+        //IEducator edudet = new EducatorRepo();
+
+        // Dependency Injection for the Educator Repository
+        private readonly IEducator edudet;
+
+        public EducatorDetailsBAL(IEducator educatorRepo)
+        {
+            edudet = educatorRepo;
+        }
+
         public List<EducatorDetails> fetchEducatorDetailsByRegistrationId(int educatorid)
         {
             List<EducatorDetails> eduDetRegId = new List<EducatorDetails>();

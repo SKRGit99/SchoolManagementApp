@@ -8,6 +8,18 @@ namespace SchoolManagementApplication.Controllers
 {
     public class EducatorController : Controller
     {
+        /* Use of the EducatorDetailsBAL class to access the business logic layer for educator details. 
+         * This class is injected into the controller through constructor injection, allowing for better separation of concerns and easier unit testing.
+        */
+        private readonly EducatorDetailsBAL _educatorBal;
+
+        public EducatorController(EducatorDetailsBAL educatorBal)
+        {
+            _educatorBal = educatorBal;
+        }
+
+
+
         //[HttpGet]
         //public IActionResult GetIndividualEducatorDetailsByRegistrationId()
         //{
@@ -24,12 +36,16 @@ namespace SchoolManagementApplication.Controllers
         //}
 
         //[HttpPost]
+
         public JsonResult GetIndividualEducatorDetailsByRegistrationId(string value)
         {
-            EducatorDetailsBAL eduDetailsDrpDwnBAL = new EducatorDetailsBAL();
+            /*We will not be using the new EducatorDetailsBAL() anymore because we are using dependency injection */
+
+            //EducatorDetailsBAL eduDetailsDrpDwnBAL = new EducatorDetailsBAL();
+
             List<EducatorDetails> educatDetails = new List<EducatorDetails>();
 
-            educatDetails = eduDetailsDrpDwnBAL.fetchEducatorDetailsByRegistrationId(Convert.ToInt32(value));
+            educatDetails = _educatorBal.fetchEducatorDetailsByRegistrationId(Convert.ToInt32(value));
 
             return Json(educatDetails);
         }

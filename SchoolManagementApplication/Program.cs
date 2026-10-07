@@ -1,8 +1,11 @@
-using SchoolManagementApplicationDAL.Data;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using NuGet.Protocol.Core.Types;
+using SchoolManagementApplicationBAL;
+using SchoolManagementApplicationDAL.Abstract;
+using SchoolManagementApplicationDAL.Data;
+using SchoolManagementApplicationDAL.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +35,22 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredLength = 6;
     options.Password.RequiredUniqueChars = 1;
 });
+
+/*Injected these services in the Program.cs file to use them in the controller class, Busienss Access Layer class and Repository class. This is done to implement the Dependency Injection in the application.*/
+builder.Services.AddScoped<IEducator, EducatorRepo>();
+
+builder.Services.AddScoped<IStudent, StudentRepo>();
+
+builder.Services.AddScoped<ISuperAdmin, SuperAdminRepo>();
+
+builder.Services.AddScoped<EducatorDetailsBAL>();
+
+builder.Services.AddScoped<StudentDetailsBAL>();
+
+builder.Services.AddScoped<SuperAdminBAL>();
+
+/*Injected Class ends*/
+
 
 
 var app = builder.Build();

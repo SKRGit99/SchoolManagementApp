@@ -8,6 +8,14 @@ namespace SchoolManagementApplication.Controllers
 {
     public class SuperAdminController : Controller
     {
+        /* Use of the SuperAdminBAL class to access the business logic layer for super admin role. 
+         * This class is injected into the controller through constructor injection, allowing for better separation of concerns and easier unit testing.
+        */
+        private readonly SuperAdminBAL _superAdminBal;
+        public SuperAdminController(SuperAdminBAL superAdminBal)
+        {
+            _superAdminBal = superAdminBal;
+        }
 
         private readonly SuperAdminBaseController<StudentDetails> _studentBase
         = new SuperAdminBaseController<StudentDetails>();
@@ -18,11 +26,16 @@ namespace SchoolManagementApplication.Controllers
         public IActionResult GetIndividualStudentDetailsByRegistrationId()
         {
             int inputStudentId = 0;
-            SuperAdminBAL studentDetailsBusiness = new SuperAdminBAL();
+
+            /*We will not be using the new SuperAdminBAL() anymore because we are using dependency injection */
+
+            //SuperAdminBAL studentDetailsBusiness = new SuperAdminBAL();
 
             /*This code is for getting dropdown details*/
             List<StudentDetailsForDropDown> studentDetailsForDrpDwn = new List<StudentDetailsForDropDown>();
-            studentDetailsForDrpDwn = studentDetailsBusiness.GetStudentDetailsForDropdown(inputStudentId);
+            //studentDetailsForDrpDwn = studentDetailsBusiness.GetStudentDetailsForDropdown(inputStudentId);
+
+            studentDetailsForDrpDwn = _superAdminBal.GetStudentDetailsForDropdown(inputStudentId);
 
             ViewBag.studentList = new SelectList(studentDetailsForDrpDwn, "StudentIdForDrpDwn", "StudentFullNameForDrpDwn");
             /*code for getting dropdown details ends*/
@@ -35,11 +48,15 @@ namespace SchoolManagementApplication.Controllers
         
         public JsonResult GetIndividualStudentDetailsByRegistrationId(string value)
         {
-            SuperAdminBAL studentDetailsBusiness = new SuperAdminBAL();
+            /*We will not be using the new SuperAdminBAL() anymore because we are using dependency injection */
+            //SuperAdminBAL studentDetailsBusiness = new SuperAdminBAL();
+
             List<StudentDetails> studentDetails = new List<StudentDetails>();
 
 
-            studentDetails = studentDetailsBusiness.GetStudentDetailsByRegistrationId(Convert.ToInt32(value));
+            //studentDetails = studentDetailsBusiness.GetStudentDetailsByRegistrationId(Convert.ToInt32(value));
+
+            studentDetails = _superAdminBal.GetStudentDetailsByRegistrationId(Convert.ToInt32(value));
 
             return Json(studentDetails);
         }
@@ -49,9 +66,10 @@ namespace SchoolManagementApplication.Controllers
         {
             int _inputStudentId = 0;
 
-            SuperAdminBAL studentDetailsBusiness = new SuperAdminBAL();
+            /*We will not be using the new SuperAdminBAL() anymore because we are using dependency injection */
+            //SuperAdminBAL studentDetailsBusiness = new SuperAdminBAL();
 
-            var stuDet = studentDetailsBusiness.fetchStudentDetails(_inputStudentId);
+            var stuDet = _superAdminBal.fetchStudentDetails(_inputStudentId);
 
             var viewModel = stuDet.Select(S => new StudentDetails
             {
@@ -88,11 +106,17 @@ namespace SchoolManagementApplication.Controllers
         public IActionResult GetIndividualEducatorDetailsByRegistrationId()
         {
             int educatorid = 0;
-            SuperAdminBAL eduDetailsBAL = new SuperAdminBAL();
+
+            /*We will not be using the new SuperAdminBAL() anymore because we are using dependency injection */
+            //SuperAdminBAL eduDetailsBAL = new SuperAdminBAL();
 
             /*This code is for grtting dropdown details*/
             List<EducatorDetailsForDropDown> educatorDetDrpDwn = new List<EducatorDetailsForDropDown>();
-            educatorDetDrpDwn = eduDetailsBAL.fetchEducatorDetailsForDropDown(educatorid);
+
+            //educatorDetDrpDwn = eduDetailsBAL.fetchEducatorDetailsForDropDown(educatorid);
+
+            educatorDetDrpDwn = _superAdminBal.fetchEducatorDetailsForDropDown(educatorid);
+
             ViewBag.EducatorList = new SelectList(educatorDetDrpDwn, "EducatorIdForDrpDwn", "EducatorFullNameForDrpDwn");
             /*code for grtting dropdown details ends*/
 
@@ -102,10 +126,15 @@ namespace SchoolManagementApplication.Controllers
         [HttpPost]
         public JsonResult GetIndividualEducatorDetailsByRegistrationId(string value)
         {
-            SuperAdminBAL eduDetailsDrpDwnBAL = new SuperAdminBAL();
+            /*We will not be using the new SuperAdminBAL() anymore because we are using dependency injection */
+
+            //SuperAdminBAL eduDetailsDrpDwnBAL = new SuperAdminBAL();
+
             List<EducatorDetails> educatDetails = new List<EducatorDetails>();
 
-            educatDetails = eduDetailsDrpDwnBAL.fetchEducatorDetailsByRegistrationId(Convert.ToInt32(value));
+            //educatDetails = eduDetailsDrpDwnBAL.fetchEducatorDetailsByRegistrationId(Convert.ToInt32(value));
+
+            educatDetails = _superAdminBal.fetchEducatorDetailsByRegistrationId(Convert.ToInt32(value));
 
             return Json(educatDetails);
         }
@@ -113,9 +142,13 @@ namespace SchoolManagementApplication.Controllers
         public IActionResult GetEducatorDetails(int page = 1)
         {
             int educatorId = 0;
-            SuperAdminBAL educatorDetailsBusiness = new SuperAdminBAL();
 
-            var educatorDetails = educatorDetailsBusiness.fetchEducatorDetails(educatorId);
+            /*We will not be using the new SuperAdminBAL() anymore because we are using dependency injection */
+
+            //SuperAdminBAL educatorDetailsBusiness = new SuperAdminBAL();
+
+            //var educatorDetails = educatorDetailsBusiness.fetchEducatorDetails(educatorId);
+            var educatorDetails = _superAdminBal.fetchEducatorDetails(educatorId);
 
             var viewModel = educatorDetails.Select(S => new EducatorDetails
             {

@@ -1,4 +1,5 @@
-﻿using SchoolManagementApplicationDAL.Abstract;
+﻿using Microsoft.Extensions.Configuration;
+using SchoolManagementApplicationDAL.Abstract;
 using SchoolManagementApplicationDAL.Model;
 using System;
 using System.Collections.Generic;
@@ -40,13 +41,30 @@ namespace SchoolManagementApplicationDAL.Repository
 
     public class StudentRepo : DepartmentRepo, IStudent
     {
+        /* StudentRepo was hardcoded with connection string and it was not using IConfiguration to get the connection string from appsettings.json. 
+         * This was causing issues when trying to run the application in different environments. 
+         * Like in Containerized environment, the connection string was not being picked up from appsettings.json.
+         * hence moved StudentRepo to the Configuration based approach to get the connection string from appsettings.json.
+         * So, I have modified the constructor to accept IConfiguration and get the connection string from appsettings.json.
+         
+        */
+
+
         //SqlConnection conObj = new SqlConnection("Server=LAPTOP-K1PVP9J6\\;Database=SchoolManagementAppDevDb;Integrated Security=True;");
 
-        private readonly string _connString = "Server=SAMPAT-PC\\;Database=SchoolManagementAppDevDb;Integrated Security=True;";
+        //private readonly string _connString = "Server=SAMPAT-PC\\;Database=SchoolManagementAppDevDb;Integrated Security=True;";
 
-        public StudentRepo()
+        //public StudentRepo()
+        //{
+
+        //}
+
+
+        //private readonly string? _connString;
+
+        public StudentRepo(IConfiguration configuration):base(configuration)
         {
-
+            //_connString =configuration.GetConnectionString( "SchoolManagementAppDbConnectionString");
         }
 
         public override OrganizationDetails getOrganizationDetails()

@@ -1,4 +1,5 @@
-﻿using SchoolManagementApplicationDAL.Abstract;
+﻿using Microsoft.Extensions.Configuration;
+using SchoolManagementApplicationDAL.Abstract;
 using SchoolManagementApplicationDAL.Model;
 using System;
 using System.Collections.Generic;
@@ -35,12 +36,21 @@ namespace SchoolManagementApplicationDAL.Repository
  */
     public class SuperAdminRepo : StudentRepo, ISuperAdmin     
     {
-        
-        private readonly string _connString = "Server=SAMPAT-PC\\;Database=SchoolManagementAppDevDb;Integrated Security=True;";
 
-        public SuperAdminRepo()
-        { 
-        
+        //private readonly string _connString = "Server=SAMPAT-PC\\;Database=SchoolManagementAppDevDb;Integrated Security=True;";
+
+        //public SuperAdminRepo()
+        //{ 
+
+        //}
+
+
+        /* Since StudentRepo now requires IConfiguration, But SuperAdminRepo was not passing the IConfiguration to the Parent Class.
+         * Hence modified the constructor to accept IConfiguration and pass it to the base class constructor.
+         */
+        public SuperAdminRepo(IConfiguration configuration) : base(configuration)
+        {
+            //_connString =configuration.GetConnectionString( "SchoolManagementAppDbConnectionString");
         }
 
         /*------------------------------------------ Organization Data ------------------------------------------*/

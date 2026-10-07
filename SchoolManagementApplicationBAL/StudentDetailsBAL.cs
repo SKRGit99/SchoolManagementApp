@@ -29,7 +29,15 @@ namespace SchoolManagementApplicationBAL
   */
     public class StudentDetailsBAL
     {
-        IStudent stdet = new StudentRepo();
+        //IStudent stdet = new StudentRepo();
+
+        // Dependency Injection for the Student Repository
+        private readonly IStudent stdet;
+
+        public StudentDetailsBAL(IStudent studentRepo)
+        {
+            stdet = studentRepo;
+        }
 
         public List<StudentDetails> GetStudentDetailsByRegistrationId(int selectedStudentRegId)
         {
