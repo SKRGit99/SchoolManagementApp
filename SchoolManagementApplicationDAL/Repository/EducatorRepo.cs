@@ -12,7 +12,7 @@ namespace SchoolManagementApplicationDAL.Repository
 {
     public class EducatorRepo: EmployeeRepo,IEducator,IStudent
     {
-        private readonly string _connString = "Server=LAPTOP-K1PVP9J6\\;Database=SchoolManagementAppDevDb;Integrated Security=True;";
+        private readonly string _connString = "Server=SAMPAT-PC\\;Database=SchoolManagementAppDevDb;Integrated Security=True;";
 
         public override OrganizationDetails getOrganizationDetails()
         {
